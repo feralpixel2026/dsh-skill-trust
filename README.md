@@ -147,6 +147,16 @@ detail 取当前版本 + packageSha256
     clientSource: DSH-SkillMarket              # 下载来源标识，用于源盾按来源统计
 ```
 
+## 文档
+
+| 文档 | 内容 |
+|---|---|
+| **[配置手册](docs/CONFIG-GUIDE.md)** | 从装 DSH、接模型、装插件到装上第一个技能，一页纸走完 |
+| [截图清单](docs/README.md) | 需要哪几张图、每张拍什么 |
+| [发布清单](docs/RELEASE_CHECKLIST.md) | 打 tag 发布前逐项检查 |
+| [CONTRIBUTING.md](CONTRIBUTING.md) | 代码结构与协作约定 |
+| [CHANGELOG.md](CHANGELOG.md) | 版本变更记录 |
+
 ## 开发
 
 ```bash
@@ -155,7 +165,7 @@ npm test         # 测试套件（139 个用例，零依赖）
 npm run verify   # 上面两条一起跑，发布前必跑
 ```
 
-CI 在 GitHub Actions 上跑 Node 22 / 24 × Ubuntu / Windows 四组合。代码结构与协作约定见 [CONTRIBUTING.md](CONTRIBUTING.md)，版本变更见 [CHANGELOG.md](CHANGELOG.md)。
+CI 在 GitHub Actions 上跑 Node 22 / 24 × Ubuntu / Windows 四组合。
 
 ## 安全边界
 
