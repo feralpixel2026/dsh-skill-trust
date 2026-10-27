@@ -24,15 +24,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      # 零运行时依赖，无 lockfile；开启 cache: npm 会让 setup-node 直接失败。
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: '22'
           registry-url: 'https://registry.npmjs.org'
-          cache: npm
-
-      - name: Install dependencies
-        run: npm ci --ignore-scripts || npm install --ignore-scripts
 
       - name: Verify before publish
         run: npm run verify
