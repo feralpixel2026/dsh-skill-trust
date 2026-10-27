@@ -1,0 +1,71 @@
+{
+  "name": "dsh-skill-trust",
+  "version": "0.3.0",
+  "description": "在 DSH 中浏览源盾 Skill 市场：查看能力画像与六维安全审计，一键安装到本机。Browse the Yuandun Skill market inside DSH with capability profiles, six-dimension security audits, and one-click local install.",
+  "type": "module",
+  "license": "Apache-2.0",
+  "author": "feralpixel2026",
+  "homepage": "https://github.com/feralpixel2026/dsh-skill-trust#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/feralpixel2026/dsh-skill-trust.git"
+  },
+  "bugs": {
+    "url": "https://github.com/feralpixel2026/dsh-skill-trust/issues"
+  },
+  "keywords": [
+    "dsh",
+    "dsh-plugin",
+    "dsh-bundle",
+    "deepseek-harness",
+    "cordis",
+    "skill",
+    "skill-market",
+    "skill-manager",
+    "yuandun",
+    "security-audit",
+    "supply-chain-security",
+    "ai-agent",
+    "claude-skill",
+    "agent-skill"
+  ],
+  "main": "lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./client": "./lib/client.js",
+    "./package.json": "./package.json",
+    "./locale/*.json": "./locale/*.json",
+    "./icon": "./icon.svg"
+  },
+  "files": [
+    "lib/",
+    "cordis.patch.yml",
+    "locale/*.json",
+    "icon.svg",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md",
+    "CONTRIBUTING.md"
+  ],
+  "scripts": {
+    "test": "node --test \"test/*.test.mjs\"",
+    "check": "node --check lib/index.js && node --check lib/client.js && node --check lib/yuandun.js && node --check lib/zip.js && node --check lib/frontmatter.js",
+    "verify": "npm run check && npm test",
+    "prepublishOnly": "npm run verify"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "dsh": {
+    "bundle": { "patch": "./cordis.patch.yml" },
+    "client": {
+      "platform": "web",
+      "immediately": true,
+      "inject": ["@deepseek-ai/dsh-client-ui-settings"]
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "description": "在 DSH 中浏览源盾 Skill 市场：六维安全审计、能力画像、一键安装到本机。Browse, audit and install AI agent skills inside DeepSeek Harness.",
+  "topics": [
+    "dsh",
+    "dsh-plugin",
+    "deepseek-harness",
+    "cordis",
+    "ai-agent",
+    "agent-skills",
+    "skill-market",
+    "skill-manager",
+    "security-audit",
+    "supply-chain-security",
+    "claude-skills",
+    "typescript-free",
+    "nodejs"
+  ],
+  "homepage": "https://yuandun.gitee.com/public/skills",
+  "private": false,
+  "hasIssues": true,
+  "hasWiki": false,
+  "hasProjects": false
+}

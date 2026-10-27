@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="可信 Skill 集市">
+  <defs>
+    <linearGradient id="tst-body" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#3d6bfa"/>
+      <stop offset="1" stop-color="#7b4bff"/>
+    </linearGradient>
+  </defs>
+  <rect x="4" y="4" width="56" height="56" rx="14" fill="url(#tst-body)"/>
+  <path d="M20 21h13l11 11-11 11H20z" fill="none" stroke="#ffffff" stroke-width="3.2" stroke-linejoin="round"/>
+  <circle cx="26.5" cy="32" r="3.4" fill="#ffffff"/>
+  <path d="M40 25.5l6.5 6.5-6.5 6.5" fill="none" stroke="#ffffff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" opacity=".85"/>
+  <path d="M14 14h8M42 50h8" stroke="#ffffff" stroke-width="3.2" stroke-linecap="round" opacity=".45"/>
+</svg>

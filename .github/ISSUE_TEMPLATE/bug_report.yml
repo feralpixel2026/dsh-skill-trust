@@ -1,0 +1,119 @@
+name: Bug 报告
+description: 报告一个可复现的问题（崩溃、报错、界面异常、接口行为不符）
+title: "[Bug] "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        感谢反馈。请尽量把「怎么复现」写清楚——本插件的多数问题来自接口参数或本地路径，缺了复现步骤很难定位。
+
+        > 提交前请确认：**不要贴 token、API Key、内网地址或个人绝对路径**。涉及安全漏洞请走 [SECURITY.md](../SECURITY.md) 的私下渠道，不要开公开 issue。
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: 出问题的模块
+      description: 大致判断在哪一层，选不准就挑最接近的一项。
+      options:
+        - 市场页（列表 / 搜索 / 排序 / 筛选 / 翻页）
+        - 详情页（能力分析 / 安全审计 / Skill.md / 文件 / 版本）
+        - 安装（下载 / 校验 / 解包 / 落盘）
+        - 本机已安装（扫描 / 展示 / 排序）
+        - 界面样式（主题、布局、图标）
+        - 插件加载失败（侧栏没有入口 / 面板空白）
+        - 不确定
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: 复现步骤
+      description: 从打开 DSH 开始，按顺序写清每一步操作。
+      placeholder: |
+        1. 打开 DSH，左侧栏点击「源盾 Skills」
+        2. 搜索框输入 xxx
+        3. 点击排序切到「下载量」
+        4. 观察列表结果
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: 期望结果
+      description: 你认为应该发生什么。
+      placeholder: 列表按下载量倒序，切换后回到第一页。
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: 实际结果
+      description: 实际发生了什么。有报错就贴报错原文（去掉凭据与绝对路径）。
+      placeholder: 列表仍按综合排序，控制台报 400 SKILL_CURSOR_INVALID。
+    validations:
+      required: true
+
+  - type: input
+    id: dsh-version
+    attributes:
+      label: DSH 版本
+      description: 在 DSH 的「关于」或安装目录里可以看到。
+      placeholder: "例如：1.2.3"
+    validations:
+      required: true
+
+  - type: input
+    id: node-version
+    attributes:
+      label: Node 版本
+      description: 终端执行 `node -v` 的输出。
+      placeholder: "例如：v22.14.0"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: os
+    attributes:
+      label: 操作系统
+      options:
+        - Windows 11
+        - Windows 10
+        - macOS（Apple Silicon）
+        - macOS（Intel）
+        - Linux
+        - 其他（请在日志里补充）
+    validations:
+      required: true
+
+  - type: input
+    id: plugin-version
+    attributes:
+      label: 插件版本
+      description: package.json 里的 version，或你安装时的 git commit。
+      placeholder: "例如：0.3.0"
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: 相关日志
+      description: 宿主控制台 / 浏览器 DevTools 的报错、失败请求的路径与状态码。**贴之前请删掉 token、Cookie、用户名和个人路径。**
+      render: shell
+      placeholder: |
+        [error] GET /dsh-skill-trust/skills?pageSize=60 → 400 SKILL_CURSOR_INVALID
+        ...
+    validations:
+      required: false
+
+  - type: textarea
+    id: extra
+    attributes:
+      label: 其他补充
+      description: 截图（请打码个人路径）、是否只在特定 Skill 上出现、是否重启过 DSH 等。
+    validations:
+      required: false

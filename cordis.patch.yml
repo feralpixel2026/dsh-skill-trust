@@ -1,0 +1,4 @@
+- insert:
+    - id: dsh-skill-trust
+      name: dsh-skill-trust
+      config: {}

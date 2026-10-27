@@ -1,0 +1,70 @@
+name: 功能建议
+description: 提出一个新功能、改进或新的使用场景
+title: "[Feature] "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        提建议前请先看一眼 [README](../README.md) 的「不做什么」边界：本插件只做**接入侧**，
+        安全结论一律来自源盾，不自建审计引擎、不在本地判定 Skill 安全与否。偏离这条的建议大概率不会被采纳。
+
+  - type: dropdown
+    id: kind
+    attributes:
+      label: 建议类型
+      options:
+        - 新功能（当前没有的能力）
+        - 现有功能改进（体验 / 性能 / 可读性）
+        - 接口适配（源盾接口有变动或新增字段）
+        - 文档改进
+        - 其他
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: 你遇到的问题
+      description: 先讲场景和卡点，再讲方案。没有具体场景的方案很难评估优先级。
+      placeholder: |
+        我经常在几十个 Skill 里挑，现在只能按下载量和收藏量排序，
+        没法看出哪个最近更新过、维护是否活跃。
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: 建议的做法
+      description: 你希望它怎么工作。如果有多个方案，都说一下倾向哪个。
+      placeholder: 在排序里加一档「最近更新」，用 detail 里已有的更新时间字段。
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: 备选方案 / 当前绕法
+      description: 你目前怎么绕过这个问题，或考虑过但放弃的方案及原因。
+    validations:
+      required: false
+
+  - type: textarea
+    id: scope
+    attributes:
+      label: 影响范围
+      description: 需要改哪一层？（可参考 CONTRIBUTING.md 的代码结构表）
+      placeholder: 主要涉及 lib/client.js 的排序逻辑，可能要给 lib/yuandun.js 的列表请求加参数。
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: confirm
+    attributes:
+      label: 提交前确认
+      options:
+        - label: 我已确认这个建议没有违背「插件不自建安全判定」的定位
+          required: true
+        - label: 我已搜索过现有 issue，没有重复
+          required: true
