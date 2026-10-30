@@ -44,27 +44,106 @@
 - DSH（DeepSeek Harness）
 - Node.js >= 22
 
-### 方式一：从 GitHub 安装
+---
+
+### 在 DSH 中安装（推荐：npm）
+
+DSH 的插件装在 **profile** 里。默认 profile 是 `desktop`：
+
+```
+~/.dsh/profiles/desktop/          # Windows: C:\Users\<你>\.dsh\profiles\desktop
+```
+
+**第 1 步：装包**
 
 ```bash
-git clone https://github.com/feralpixel2026/dsh-skill-trust.git
+cd ~/.dsh/profiles/desktop
+pnpm add dsh-skill-trust
 ```
 
-然后在 DSH 里把插件装进当前 profile：
+> 用 `pnpm` 而不是 `npm`——DSH profile 由 pnpm 管理（目录里有 `pnpm-lock.yaml`）。
+> 用 npm 也能装，但要用 `npm install dsh-skill-trust`，装完建议再跑一次 `pnpm install` 对齐锁文件。
 
+**第 2 步：把插件加进 bundles 数组**
+
+打开 `~/.dsh/profiles/desktop/package.json`，在 `dsh.profile.bundles` 里**追加一行**：
+
+```json
+{
+  "dsh": {
+    "profile": {
+      "bundles": [
+        "@deepseek-ai/dsh-base",
+        "...",
+        "dsh-skill-trust"        ← 加这行
+      ]
+    }
+  }
+}
 ```
-plugin_manager action=install_bundle target=<克隆下来的绝对路径>
-```
 
-重启 DSH，左侧栏出现 **源盾 Skills**。
+> **这一步不能省。** 插件自带的 `cordis.patch.yml` 只负责注册插件行，但 DSH 只加载 `bundles` 数组里声明过的 bundle。少了这行，装完也不会出现。
 
-### 方式二：从 npm 安装
+**第 3 步：重启 DSH**
+
+左侧栏出现 **源盾 Skills**（紫色包状图标，排在 Session 附近）。
+
+---
+
+### 安装方式对照
+
+| 方式 | 命令 | 适用场景 |
+|---|---|---|
+| **npm（推荐）** | `pnpm add dsh-skill-trust` | 正常使用 |
+| **源码** | `cd ~/.dsh/profiles/desktop && npm install --save file:<绝对路径>` | 要改代码 |
+| **plugin_manager** | `plugin_manager action=install_bundle target=<路径或包名>` | 已在 DSH 会话里 |
+
+**源码方式说明**：`npm install file:` 会创建软链（Windows 上是 Junction），改源码立即生效，改完重启 DSH 即可。
+
+> ⚠️ npm 用 `file:`，pnpm 用 `link:`。别搞混——npm 遇到 `link:` 会报 `EUNSUPPORTEDPROTOCOL`。
+
+**plugin_manager 方式**：在 DSH 会话里直接说「用 plugin_manager 安装 dsh-skill-trust」，它会自己完成第 1、2 步。
+
+---
+
+### 验证装好了
 
 ```bash
-npm install dsh-skill-trust
+# 确认包在位
+ls ~/.dsh/profiles/desktop/node_modules/dsh-skill-trust/lib/client.js
+
+# 确认 bundles 里声明了
+node -e "const p=require(process.env.USERPROFILE+'/.dsh/profiles/desktop/package.json'); console.log(p.dsh.profile.bundles.filter(b=>b.includes('skill-trust')))"
 ```
 
-装到 DSH profile 的 `node_modules` 后再以 bundle 形式启用，或直接 `install_bundle` 指向 npm 包目录。
+第二条命令应输出 `[ 'dsh-skill-trust' ]`。然后重启 DSH，看左侧栏。
+
+---
+
+## 配置
+
+默认连官方源盾站点，一般不用改。需要调整时，在 `~/.dsh/profiles/desktop/cordis.patch.yml` **末尾**追加：
+
+```yaml
+- id: dsh-skill-trust
+  name: dsh-skill-trust
+  config:
+    base: https://yuandun.gitee.com          # 源盾接口基址
+    installRoot: C:/Users/you/.agents/skills # 技能装到哪，默认 ~/.agents/skills
+    clientSource: DSH-SkillMarket            # 下载来源标识，源盾按来源统计（≤32 字符）
+```
+
+| 配置项 | 默认值 | 说明 |
+|---|---|---|
+| `base` | `https://yuandun.gitee.com` | 源盾接口基址 |
+| `installRoot` | `~/.agents/skills` | 技能落盘目录 |
+| `clientSource` | `DSH-SkillMarket` | 上报给源盾的来源标记 |
+
+**改完必须重启 DSH**——配置只在启动时读一次。
+
+> 注意区分两个文件：
+> - `cordis.yml` —— **不要动它**，恒为空数组，组合由 patch 层完成
+> - `cordis.patch.yml` —— **你的配置写这里**
 
 ## 功能
 
@@ -133,19 +212,6 @@ detail 取当前版本 + packageSha256
 | 游标 | 与 `sortBy` 绑定，换排序必须回第一页，否则 400 `SKILL_CURSOR_INVALID` |
 | 字段名 | 搜索卡片用 `installs`，详情用 `downloadCount`，同义不同名 |
 | `capabilityStatus` | 非 `SUCCEEDED` 时其余字段全为 `null`，应显示「分析中」而非空卡片 |
-
-## 配置
-
-在 profile 的 `cordis.patch.yml` 覆盖本插件行：
-
-```yaml
-- id: dsh-skill-trust
-  name: dsh-skill-trust
-  config:
-    base: https://yuandun.gitee.com            # 接口基址
-    installRoot: C:/Users/you/.agents/skills   # 安装目录，默认 ~/.agents/skills
-    clientSource: DSH-SkillMarket              # 下载来源标识，用于源盾按来源统计
-```
 
 ## 文档
 
